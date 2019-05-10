@@ -2,13 +2,13 @@
   <div id="designer"
        v-bind:class="{folded}">
     <div class="logo">
-      <h2 class="">
+      <h2 class="main-title">
         ID Cart Generator
       </h2>
     </div>
 
 
-    <div class="toolbox-toggle"  v-on:click="toggle">
+    <div class="toolbox-toggle" v-on:click="toggle">
       <i class="fas fa-chevron-left"></i>
     </div>
 
@@ -38,7 +38,16 @@
 
       <div class="designer-preview">
         <span class="header">Cart Preview</span>
-        <div id="img_preview" ref="img_preview" src=""></div>
+        <div id="img_preview" ref="img_preview">
+
+          <template v-for="(item, index) in csvHeader">
+            <vue-draggable-resizable :w="200" :h="40" :x="$refs.img_preview.clientWidth/2 - 100" :y="40 + index*100" :parent="true" >
+              {{item}}
+            </vue-draggable-resizable>
+          </template>
+
+
+        </div>
       </div>
 
     </div>
@@ -51,20 +60,27 @@
   import Footer from './Footer'
   import {csvToArray, logError, readBlobAsText, readBlobAsUrl} from "../Helper/Helper";
   import {Store, mapGetters} from 'vuex';
-
+  import VueDraggableResizable from 'vue-draggable-resizable';
 
 
   export default {
     name: 'Designer',
     components:{
-      Footer
+      Footer,
+      VueDraggableResizable
+    },
+    computed:{
+      ...mapGetters([
+        'csvHeader',
+      ])
     },
     props: {
       msg: String
     },
     data: ()=>{
       return {
-        folded: false
+        folded: false,
+        // previewWidth: this.$refs.img_preview.clientWidth
       }
     },
     methods:{
@@ -87,7 +103,6 @@
           let csvText = await readBlobAsText(excel_file);
           let csvArray = csvToArray(csvText);
           this.$store.dispatch('setCsvArray', csvArray);
-
         } catch (e) {
           logError(e.message)
         }
@@ -100,7 +115,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-  $main-color: #0288D1;
+  $main-color: #01517d;
   $text-color: #f2f2f2;
   $side-padding: 10px;
   $height-padding: 20px;
@@ -122,6 +137,10 @@
     display: none;
   }
 
+
+  .main-title{
+    text-shadow: 1px 1px 5px $main-color;
+  }
 
   #designer, *{
     box-sizing: border-box;
@@ -204,6 +223,7 @@
       .designer-preview{
         flex-basis: 200%;
         #img_preview{
+          position: relative;
           margin: 20px 0;
           width: 100%;
           height: 100%;
@@ -238,8 +258,6 @@
     .logo{
       text-align: center;
     }
-
-
   }
 
 
