@@ -24,7 +24,7 @@
                  @change="img_file_changed()">
         </label>
         <span class="divider"> Step 2 </span>
-        <label class="input-file-label" for="excel_file_picker"> Select Excel file
+        <label class="input-file-label" for="excel_file_picker"> Select Dataset
           <input type="file"
                  id="excel_file_picker"
                  ref="excel_file_picker"
@@ -49,8 +49,9 @@
 <script>
 
   import Footer from './Footer'
-  import {readBlobAsArrayBuffer, readBlobAsUrl} from "../Helper/Helper";
-  import XLSX from 'xlsx';
+  import {csvToArray, logError, readBlobAsText, readBlobAsUrl} from "../Helper/Helper";
+  import {Store, mapGetters} from 'vuex';
+
 
 
   export default {
@@ -76,22 +77,20 @@
           let imgUrl = await readBlobAsUrl(img_file);
           this.$refs.img_preview.style.backgroundImage = `url(${imgUrl})`;
         }catch (e) {
-          console.log("Error!: " + e.message)
+          logError(e.message)
         }
       },
 
-      excel_file_changed: async function () {
-        // const excel_file = this.$refs.img_file_picker.files[0];
-        // let excelBlob = await readBlobAsUrl(excel_file);
-        // const excelBuffer = await readBlobAsArrayBuffer(excelBlob);
-        // let fixedData = fixdata(data);
-        // let workbook = XLSX.read(btoa(fixedData), {type: 'base64'});
-        // let worksheet = workbook.Sheets[workbook.SheetNames[0]];
-        // const headers = get_header_row(worksheet);
-        // let results = XLSX.utils.sheet_to_json(worksheet);
-        // let tickets = results;
-        //
+      async excel_file_changed(){
+        try{
+          const excel_file = this.$refs.excel_file_picker.files[0];
+          let csvText = await readBlobAsText(excel_file);
+          let csvArray = csvToArray(csvText);
+          this.$store.dispatch('setCsvArray', csvArray);
 
+        } catch (e) {
+          logError(e.message)
+        }
       },
 
 
