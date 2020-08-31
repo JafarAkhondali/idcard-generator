@@ -5,7 +5,7 @@
   >
     <div class="logo">
       <h2 class="main-title">
-        ID Cart Generator
+        ID Card Generator
       </h2>
     </div>
 
@@ -65,7 +65,7 @@
         />
 
         <span class="divider"> Step 4 </span>
-        ID Cart Dimensions:
+        ID Card Dimensions:
 
         <span class="divider"> Step 5 </span>
         <v-btn
@@ -78,7 +78,7 @@
       </div>
 
       <div class="designer-preview">
-        <span class="header">Cart Preview</span>
+        <span class="header">Card Preview</span>
         <div
           id="img_preview"
           ref="img_preview"

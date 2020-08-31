@@ -4,7 +4,7 @@
     color="rgba(0,0,0,0)"
   >
     <a
-      href="https://github.com/JafarAkhondali/idcart-generator"
+      href="https://github.com/JafarAkhondali/idcard-generator"
       class="black--text"
       style="display: flex;flex-direction: row;text-decoration: none;"
     >
