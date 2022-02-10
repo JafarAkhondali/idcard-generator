@@ -11,7 +11,7 @@
     "@mapbox/shelf-pack": "^3.2.0",
     "core-js": "^2.6.5",
     "fitty": "^2.2.6",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "sass-loader": "^7.1.0",
     "vue": "^2.6.10",
     "vue-context": "^6.0.0",
